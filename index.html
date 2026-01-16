@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Resume Analyzer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Pure Vector PDF Generation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #EAEAEA;
+      --color-secondary: #B8B8B8;
+      --color-accent: #C2B8A3;
+      --color-bg: #000000;
+    }
+    
+    body {
+      font-family: 'IBM Plex Mono', monospace;
+      background-color: var(--color-bg);
+      color: var(--color-primary);
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Minimal Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000; 
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #333; 
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-accent);
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "rxjs": "https://esm.sh/rxjs@^7.8.2?conditions=es2015",
+    "rxjs/operators": "https://esm.sh/rxjs@^7.8.2/operators?conditions=es2015",
+    "rxjs/ajax": "https://esm.sh/rxjs@^7.8.2/ajax?conditions=es2015",
+    "rxjs/webSocket": "https://esm.sh/rxjs@^7.8.2/webSocket?conditions=es2015",
+    "rxjs/testing": "https://esm.sh/rxjs@^7.8.2/testing?conditions=es2015",
+    "rxjs/fetch": "https://esm.sh/rxjs@^7.8.2/fetch?conditions=es2015",
+    "@google/genai": "https://esm.sh/@google/genai@^1.36.0?external=rxjs",
+    "@angular/platform-browser": "https://esm.sh/@angular/platform-browser@^21.1.0?external=rxjs",
+    "@angular/forms": "https://esm.sh/@angular/forms@^21.1.0?external=rxjs",
+    "@angular/compiler": "https://esm.sh/@angular/compiler@^21.1.0?external=rxjs",
+    "@angular/core": "https://esm.sh/@angular/core@^21.1.0?external=rxjs",
+    "@angular/router": "https://esm.sh/@angular/router@^21.1.0?external=rxjs",
+    "@angular/common": "https://esm.sh/@angular/common@^21.1.0?external=rxjs"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>

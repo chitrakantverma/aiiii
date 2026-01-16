@@ -1,0 +1,5 @@
+{
+  "name": "AI Resume Analyzer",
+  "description": "A monochrome, academic-style resume analyzer using Gemini 2.5 Flash for deep document analysis.",
+  "requestFramePermissions": []
+}
