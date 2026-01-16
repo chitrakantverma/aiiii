@@ -11,62 +11,314 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --color-primary: #EAEAEA;
-      --color-secondary: #B8B8B8;
-      --color-accent: #C2B8A3;
-      --color-bg: #000000;
+  <link rel="stylesheet" href="styles.css">
+  
+  <script type="importmap">
+  {
+    "imports": {
+      "@google/genai": "https://esm.sh/@google/genai@^0.1.1"
     }
-    
-    body {
-      font-family: 'IBM Plex Mono', monospace;
-      background-color: var(--color-bg);
-      color: var(--color-primary);
-      -webkit-font-smoothing: antialiased;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-
-    /* Minimal Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #000; 
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #333; 
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--color-accent);
-    }
-  </style>
-<script type="importmap">
-{
-  "imports": {
-    "rxjs": "https://esm.sh/rxjs@^7.8.2?conditions=es2015",
-    "rxjs/operators": "https://esm.sh/rxjs@^7.8.2/operators?conditions=es2015",
-    "rxjs/ajax": "https://esm.sh/rxjs@^7.8.2/ajax?conditions=es2015",
-    "rxjs/webSocket": "https://esm.sh/rxjs@^7.8.2/webSocket?conditions=es2015",
-    "rxjs/testing": "https://esm.sh/rxjs@^7.8.2/testing?conditions=es2015",
-    "rxjs/fetch": "https://esm.sh/rxjs@^7.8.2/fetch?conditions=es2015",
-    "@google/genai": "https://esm.sh/@google/genai@^1.36.0?external=rxjs",
-    "@angular/platform-browser": "https://esm.sh/@angular/platform-browser@^21.1.0?external=rxjs",
-    "@angular/forms": "https://esm.sh/@angular/forms@^21.1.0?external=rxjs",
-    "@angular/compiler": "https://esm.sh/@angular/compiler@^21.1.0?external=rxjs",
-    "@angular/core": "https://esm.sh/@angular/core@^21.1.0?external=rxjs",
-    "@angular/router": "https://esm.sh/@angular/router@^21.1.0?external=rxjs",
-    "@angular/common": "https://esm.sh/@angular/common@^21.1.0?external=rxjs"
   }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+  </script>
 </head>
-<body>
-  <app-root></app-root>
+<body class="bg-black text-[#EAEAEA] font-mono antialiased overflow-x-hidden selection:bg-[#C2B8A3] selection:text-black">
+
+  <div class="min-h-screen flex flex-col w-full relative">
+      
+    <!-- PART 1: SYSTEM-LEVEL BACKGROUND ANIMATION -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden print-hide">
+      <div class="absolute inset-0 bg-system-grid opacity-[0.05] md:opacity-[0.08] animate-grid-flow"></div>
+    </div>
+
+    <!-- Header / Sticky Nav -->
+    <header class="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-[#333] print-hide transition-all duration-500">
+      <div class="max-w-[1100px] mx-auto px-4 md:px-6 py-4 md:h-20 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
+        
+        <!-- Logo -->
+        <div class="text-xs md:text-sm font-medium tracking-[0.15em] uppercase text-[#EAEAEA] hover:text-white transition-colors cursor-default select-none text-center md:text-left">
+          AI Resume Analyzer
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2 text-[10px] md:text-xs tracking-widest font-normal">
+          <a href="#" data-route="home" class="nav-link relative py-2 text-[#B8B8B8] hover:text-[#EAEAEA] transition-colors duration-300">
+             HOME
+             <span class="underline-indicator"></span>
+          </a>
+          <a href="#" data-route="upload" class="nav-link relative py-2 text-[#B8B8B8] hover:text-[#EAEAEA] transition-colors duration-300">
+             UPLOAD
+             <span class="underline-indicator"></span>
+          </a>
+          <a href="#" data-route="results" class="nav-link relative py-2 text-[#B8B8B8] hover:text-[#EAEAEA] transition-colors duration-300">
+             RESULTS
+             <span class="underline-indicator"></span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full relative z-10">
+      
+      <!-- VIEW: HOME -->
+      <section id="view-home" class="view-section hidden">
+        <div class="relative w-full min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden py-12 md:py-0">
+          <!-- System Pulse -->
+          <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+            <div class="h-full w-[1px] bg-white/10 animate-scan blur-[1px]"></div>
+          </div>
+
+          <!-- Content -->
+          <div class="relative z-10 w-full max-w-4xl mx-auto px-4 md:px-6 text-center space-y-10 md:space-y-12">
+            
+            <div class="space-y-6 md:space-y-8">
+              <h1 class="text-3xl sm:text-4xl md:text-6xl font-medium tracking-tight uppercase leading-tight opacity-0 animate-enter-up text-[#EAEAEA]" style="animation-delay: 0.2s;">
+                AI Resume<br>Analyzer
+              </h1>
+              
+              <div class="space-y-3 opacity-0 animate-enter-up px-2" style="animation-delay: 0.6s;">
+                <p class="text-sm md:text-base text-[#B8B8B8] font-light tracking-[0.05em] max-w-xl mx-auto leading-relaxed">
+                  An AI-assisted system for resume analysis, clarity, and improvement.
+                </p>
+                <p class="text-xs text-[#B8B8B8] font-light opacity-60">
+                  Focused on clarity, structure, and role relevance.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex flex-col items-center gap-2 md:gap-3 text-[10px] md:text-sm font-mono text-[#B8B8B8] h-12 md:h-16 justify-center">
+               <div class="typing-line opacity-0 animate-type-reveal" style="animation-delay: 1.2s;">> Completeness Analysis initialized...</div>
+               <div class="typing-line opacity-0 animate-type-reveal" style="animation-delay: 1.8s;">> Role-Specific Feedback Model ready.</div>
+            </div>
+
+            <div class="pt-4 md:pt-6 opacity-0 animate-fade-in w-full flex justify-center px-4 md:px-0" style="animation-delay: 2.4s;">
+              <button onclick="router.navigate('upload')" 
+                 class="cta-button block w-full sm:w-auto border border-[#EAEAEA] px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] 
+                        bg-transparent text-[#EAEAEA] transition-all duration-300 hover:bg-[#EAEAEA] hover:text-black hover:border-[#C2B8A3] text-center">
+                Analyze Your Resume
+              </button>
+            </div>
+            
+            <div class="pt-12 md:pt-16 opacity-0 animate-fade-in" style="animation-delay: 3.0s;">
+              <div class="inline-flex flex-col items-center gap-2 border-t border-[#333] pt-6 px-4 md:px-16 w-full md:w-auto">
+                 <div class="flex flex-col sm:flex-row gap-4 sm:gap-8 text-[10px] font-mono tracking-widest uppercase items-center">
+                   <div class="flex items-center gap-2">
+                     <span class="text-[#B8B8B8]">Status:</span>
+                     <span class="text-[#C2B8A3] flex items-center gap-2">
+                       <span class="block w-1.5 h-1.5 bg-[#C2B8A3] rounded-sm animate-pulse-status"></span>
+                       Ready
+                     </span>
+                   </div>
+                   <div class="flex items-center gap-2">
+                      <span class="text-[#B8B8B8]">Model:</span>
+                      <span class="text-[#C2B8A3]">Gemini 2.5 Flash</span>
+                   </div>
+                 </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: UPLOAD -->
+      <section id="view-upload" class="view-section hidden">
+        <div class="max-w-[1100px] mx-auto px-4 md:px-6 py-10 md:py-20 animate-fade-in w-full min-h-[70vh] flex items-center justify-center">
+          <div class="w-full max-w-2xl">
+            
+            <div class="mb-8 md:mb-12 text-center">
+               <h2 class="text-2xl md:text-3xl font-medium uppercase tracking-widest mb-3 md:mb-4 text-[#EAEAEA]">Input Parameters</h2>
+               <p class="text-[#B8B8B8] text-xs md:text-sm font-light">Upload your document and define the analysis context.</p>
+            </div>
+    
+            <form id="upload-form" class="space-y-8 md:space-y-12">
+              
+              <!-- Role Selection -->
+              <div class="space-y-3 md:space-y-4">
+                <label for="role-select" class="block text-xs font-normal uppercase tracking-widest text-[#B8B8B8]">Target Role</label>
+                <div class="relative group">
+                  <select id="role-select" required
+                          class="w-full appearance-none bg-transparent border border-[#333] text-[#EAEAEA] px-4 md:px-6 py-3 md:py-4 rounded-none 
+                                 text-sm font-light focus:outline-none focus:border-[#C2B8A3] focus:ring-0 transition-colors cursor-pointer">
+                    <option value="" disabled selected class="bg-black text-[#555]">SELECT TARGET ROLE</option>
+                    <option value="Software Developer" class="bg-black text-[#EAEAEA]">Software Developer</option>
+                    <option value="Web Developer" class="bg-black text-[#EAEAEA]">Web Developer</option>
+                    <option value="Data Analyst" class="bg-black text-[#EAEAEA]">Data Analyst</option>
+                    <option value="Fresher / Student" class="bg-black text-[#EAEAEA]">Fresher / Student</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 md:px-6 text-[#EAEAEA] group-hover:text-[#C2B8A3]">
+                    <span class="text-[10px]">▼</span>
+                  </div>
+                </div>
+              </div>
+    
+              <!-- File Upload -->
+              <div class="space-y-3 md:space-y-4">
+                <div class="flex justify-between items-end flex-wrap gap-2">
+                    <label for="resume-upload" class="block text-xs font-normal uppercase tracking-widest text-[#B8B8B8]">
+                        Upload Resume
+                    </label>
+                    <span class="text-[10px] text-[#555] uppercase tracking-wide">PDF, PNG, JPG</span>
+                </div>
+                
+                <div class="relative border border-[#333] hover:border-[#555] transition-colors p-1 focus-within:border-[#C2B8A3]">
+                  <input type="file" id="resume-upload" accept="application/pdf, image/png, image/jpeg, image/jpg" required
+                       class="block w-full text-xs md:text-sm text-[#B8B8B8]
+                              file:mr-4 md:file:mr-6 file:py-3 md:file:py-4 file:px-4 md:file:px-8
+                              file:border-0 file:border-r file:border-[#333]
+                              file:text-[10px] md:file:text-xs file:font-normal file:uppercase file:tracking-widest
+                              file:bg-[#111] file:text-[#EAEAEA]
+                              hover:file:bg-[#EAEAEA] hover:file:text-black
+                              file:transition-colors cursor-pointer" />
+                </div>
+                <p class="text-[10px] mt-2 text-[#555] uppercase tracking-wide text-right">
+                    Vision Analysis enabled for images
+                </p>
+              </div>
+    
+              <div id="error-message" class="hidden border border-red-900/50 p-4 md:p-6 bg-transparent text-red-300 text-xs font-mono break-words"></div>
+    
+              <!-- Submit Button -->
+              <div class="pt-4 md:pt-8">
+                <button type="submit" id="analyze-btn"
+                        class="w-full border border-[#EAEAEA] px-8 py-4 md:py-5 text-sm font-bold uppercase tracking-[0.2em] 
+                               bg-transparent text-[#EAEAEA] 
+                               hover:bg-[#EAEAEA] hover:text-black hover:border-[#C2B8A3]
+                               disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[#EAEAEA] disabled:hover:border-[#333]
+                               transition-all duration-300">
+                  <span id="btn-text">Initialize Analysis</span>
+                  <span id="btn-loading" class="hidden animate-pulse">Processing...</span>
+                </button>
+              </div>
+    
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: RESULTS -->
+      <section id="view-results" class="view-section hidden">
+        <div class="max-w-[1100px] mx-auto px-4 md:px-6 py-8 md:py-12 pb-24 md:pb-32">
+          
+          <div id="no-results" class="text-center py-20 md:py-32 animate-fade-in hidden">
+            <p class="mb-6 text-[#B8B8B8] font-light">No analysis data currently available.</p>
+            <button onclick="router.navigate('upload')" class="border border-[#333] px-6 py-2 text-xs uppercase text-[#B8B8B8] hover:border-[#C2B8A3] hover:text-[#EAEAEA] transition-all">Return to Upload</button>
+          </div>
+
+          <div id="results-content" class="hidden">
+            <!-- Header Section -->
+            <header class="mb-10 md:mb-16 border-b border-[#333] pb-6 md:pb-8 animate-slide-up" style="animation-delay: 0.1s;">
+              <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-0">
+                <div>
+                  <p class="text-[10px] uppercase tracking-widest text-[#B8B8B8] mb-2">Target Role</p>
+                  <h1 id="res-role" class="text-2xl md:text-5xl font-medium text-[#EAEAEA] uppercase tracking-wide break-words"></h1>
+                </div>
+                <div class="text-left md:text-right w-full md:w-auto flex items-center md:block gap-4 md:gap-0">
+                  <span id="res-score" class="block text-5xl md:text-6xl font-bold text-[#EAEAEA]"></span>
+                  <span class="text-[10px] uppercase tracking-[0.2em] text-[#C2B8A3] block pt-1 md:pt-0">Match Score</span>
+                </div>
+              </div>
+            </header>
+
+            <!-- 1. Overview -->
+            <section class="mb-12 md:mb-20 animate-slide-up" style="animation-delay: 0.2s;">
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
+                <div class="md:col-span-3"><h3 class="text-xs font-normal uppercase tracking-widest text-[#B8B8B8]">01. Profile Overview</h3></div>
+                <div class="md:col-span-9">
+                  <p id="res-overview" class="text-base md:text-lg leading-relaxed font-light text-[#EAEAEA] border-l-2 border-[#C2B8A3] pl-4 md:pl-6"></p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 2. Strengths -->
+            <section class="mb-12 md:mb-20 animate-slide-up" style="animation-delay: 0.3s;">
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
+                <div class="md:col-span-3"><h3 class="text-xs font-normal uppercase tracking-widest text-[#B8B8B8]">02. Key Strengths</h3></div>
+                <div class="md:col-span-9">
+                  <ul id="res-strengths" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 md:gap-y-4"></ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- 3. Skills -->
+            <section class="mb-12 md:mb-20 animate-slide-up" style="animation-delay: 0.4s;">
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
+                <div class="md:col-span-3"><h3 class="text-xs font-normal uppercase tracking-widest text-[#B8B8B8]">03. Skill Matrix</h3></div>
+                <div class="md:col-span-9">
+                  <div id="res-skills-container" class="grid grid-cols-1 sm:grid-cols-2 gap-8"></div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 4. Missing -->
+            <section id="res-missing-section" class="mb-12 md:mb-20 animate-slide-up hidden" style="animation-delay: 0.5s;">
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
+                <div class="md:col-span-3"><h3 class="text-xs font-normal uppercase tracking-widest text-[#B8B8B8]">04. Critical Missing Gaps</h3></div>
+                <div class="md:col-span-9">
+                  <div id="res-missing" class="space-y-4 md:space-y-6"></div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 5. Improvements -->
+            <section class="mb-12 md:mb-20 animate-slide-up" style="animation-delay: 0.6s;">
+               <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
+                 <div class="md:col-span-3"><h3 class="text-xs font-normal uppercase tracking-widest text-[#B8B8B8]">05. Strategic Improvements</h3></div>
+                 <div class="md:col-span-9">
+                   <div id="res-improvements" class="space-y-6 md:space-y-8"></div>
+                 </div>
+               </div>
+            </section>
+
+            <!-- 6. Role Alignment -->
+            <section class="mb-12 md:mb-20 animate-slide-up" style="animation-delay: 0.7s;">
+               <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
+                 <div class="md:col-span-3"><h3 class="text-xs font-normal uppercase tracking-widest text-[#B8B8B8]">06. Role Alignment</h3></div>
+                 <div class="md:col-span-9">
+                    <div class="flex items-center gap-4 mb-6">
+                       <span class="text-sm text-[#B8B8B8] uppercase tracking-widest">Fit Level:</span>
+                       <span id="res-match-level" class="px-3 py-1 bg-[#EAEAEA] text-black text-xs font-bold uppercase tracking-widest"></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                       <div>
+                         <h5 class="text-xs text-[#C2B8A3] uppercase mb-3 tracking-wide">Identified Gaps</h5>
+                         <ul id="res-gaps" class="space-y-2"></ul>
+                       </div>
+                       <div>
+                         <h5 class="text-xs text-[#EAEAEA] uppercase mb-3 tracking-wide">Suggested Additions</h5>
+                         <ul id="res-suggestions" class="space-y-2"></ul>
+                       </div>
+                    </div>
+                 </div>
+               </div>
+            </section>
+
+            <!-- 7. Action Plan -->
+            <section class="mb-12 md:mb-20 animate-slide-up" style="animation-delay: 0.8s;">
+               <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
+                  <div class="md:col-span-3"><h3 class="text-xs font-normal uppercase tracking-widest text-[#B8B8B8]">07. Priority Action Plan</h3></div>
+                  <div class="md:col-span-9">
+                     <div id="res-plan" class="space-y-4"></div>
+                  </div>
+               </div>
+            </section>
+            
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 md:py-12 border-t border-[#333] text-center print-hide relative z-10 px-4">
+      <div class="max-w-[1100px] mx-auto">
+        <p class="text-[10px] text-[#B8B8B8] font-light tracking-widest uppercase opacity-60 leading-relaxed">
+          This system provides AI-assisted suggestions. Final decisions remain with the user.
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="script.js"></script>
 </body>
 </html>
